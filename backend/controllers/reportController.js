@@ -1,9 +1,10 @@
 /**
- * Controllers for score (role-fit, learning-roadmap, report added in later phases).
+ * Controllers for score, role-fit (learning-roadmap, report added in later phases).
  * Handle req/res only; delegate to lib.
  */
 
 const { scoreJobPotential } = require('../lib/jobPotential');
+const { analyzeRoleFit } = require('../lib/roleFit');
 
 function requireProfile(req, res, next) {
   const profile = req.body?.profile;
@@ -27,7 +28,24 @@ async function postScore(req, res, next) {
   }
 }
 
+async function postRoleFit(req, res, next) {
+  try {
+    const jobPotentialScore = req.body?.jobPotentialScore;
+    const result = await analyzeRoleFit(req.profile, { jobPotentialScore });
+    if (!result.success) {
+      return next(Object.assign(new Error(result.error), { status: 502 }));
+    }
+    res.json({
+      best_fit_roles: result.roleFit.best_fit_roles,
+      roles_to_avoid: result.roleFit.roles_to_avoid,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   requireProfile,
   postScore,
+  postRoleFit,
 };
