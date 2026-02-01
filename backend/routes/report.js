@@ -9,6 +9,7 @@ const {
   postScore,
   postRoleFit,
   postLearningRoadmap,
+  postReport,
 } = require('../controllers/reportController');
 
 const router = express.Router();
@@ -16,5 +17,6 @@ const router = express.Router();
 router.post('/score', requireProfile, postScore);
 router.post('/role-fit', requireProfile, postRoleFit);
 router.post('/learning-roadmap', requireProfile, postLearningRoadmap);
+router.post('/report', requireProfile, postReport);
 
 module.exports = router;

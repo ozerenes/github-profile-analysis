@@ -1,18 +1,11 @@
 /**
- * Controllers for ingest, extract-profile (and later analyze).
- * Handle req/res only; delegate to lib.
+ * Controllers for ingest, extract-profile, and full analyze.
+ * Handle req/res only; delegate to services and lib.
  */
 
 const { ingest } = require('../lib/ingestion');
 const { extractProfile } = require('../lib/profileExtraction');
-
-function urlInputs(body) {
-  return {
-    githubUrl: body?.githubUrl || body?.github,
-    linkedinUrl: body?.linkedinUrl || body?.linkedin,
-    portfolioUrl: body?.portfolioUrl || body?.portfolio,
-  };
-}
+const { runFullAnalysis, urlInputs } = require('../services/analyzeService');
 
 async function postIngest(req, res, next) {
   try {
@@ -44,4 +37,18 @@ async function postExtractProfile(req, res, next) {
   }
 }
 
-module.exports = { postIngest, postExtractProfile };
+async function postAnalyze(req, res, next) {
+  try {
+    const buffer = req.file?.buffer;
+    const result = await runFullAnalysis(buffer, urlInputs(req.body));
+    if (!result.success) {
+      const status = result.error?.includes('required') || result.error?.includes('CV') ? 400 : 502;
+      return next(Object.assign(new Error(result.error), { status }));
+    }
+    res.json({ report: result.report });
+  } catch (err) {
+    next(err);
+  }
+}
+
+module.exports = { postIngest, postExtractProfile, postAnalyze };
