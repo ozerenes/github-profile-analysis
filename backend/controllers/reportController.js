@@ -5,6 +5,7 @@
 
 const { scoreJobPotential } = require('../lib/jobPotential');
 const { analyzeRoleFit } = require('../lib/roleFit');
+const { generateLearningRoadmap } = require('../lib/learningRoadmap');
 
 function requireProfile(req, res, next) {
   const profile = req.body?.profile;
@@ -44,8 +45,26 @@ async function postRoleFit(req, res, next) {
   }
 }
 
+async function postLearningRoadmap(req, res, next) {
+  try {
+    const roleFit = req.body?.roleFit ?? null;
+    const result = await generateLearningRoadmap(req.profile, { roleFit });
+    if (!result.success) {
+      return next(Object.assign(new Error(result.error), { status: 502 }));
+    }
+    res.json({
+      short_term: result.roadmap.short_term,
+      mid_term: result.roadmap.mid_term,
+      long_term: result.roadmap.long_term,
+    });
+  } catch (err) {
+    next(err);
+  }
+}
+
 module.exports = {
   requireProfile,
   postScore,
   postRoleFit,
+  postLearningRoadmap,
 };

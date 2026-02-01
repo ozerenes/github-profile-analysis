@@ -4,11 +4,17 @@
  */
 
 const express = require('express');
-const { requireProfile, postScore, postRoleFit } = require('../controllers/reportController');
+const {
+  requireProfile,
+  postScore,
+  postRoleFit,
+  postLearningRoadmap,
+} = require('../controllers/reportController');
 
 const router = express.Router();
 
 router.post('/score', requireProfile, postScore);
 router.post('/role-fit', requireProfile, postRoleFit);
+router.post('/learning-roadmap', requireProfile, postLearningRoadmap);
 
 module.exports = router;
