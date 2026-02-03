@@ -239,10 +239,14 @@ function Input({ onBack, onSubmit }) {
             type="submit"
             disabled={!file}
             className="btn-primary"
-            style={{
-              background: file ? undefined : 'var(--text-muted)',
-              cursor: file ? 'pointer' : 'not-allowed',
-            }}
+            style={
+              file
+                ? undefined
+                : {
+                    background: 'var(--text-muted)',
+                    cursor: 'not-allowed',
+                  }
+            }
           >
             Analyze
           </button>

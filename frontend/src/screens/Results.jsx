@@ -32,26 +32,13 @@ function Results({ report, onNewAnalysis }) {
     background: 'var(--bg-surface)',
     border: '1px solid var(--border)',
     borderRadius: 'var(--radius)',
-    boxShadow: '0 1px 2px rgba(0,0,0,0.04)',
+    boxShadow: 'var(--shadow-sm)',
   };
 
   return (
     <section>
       <header style={{ marginBottom: 24 }}>
-        <button
-          type="button"
-          onClick={onNewAnalysis}
-          style={{
-            minHeight: 'var(--btn-height)',
-            padding: '0 16px',
-            fontSize: '0.875rem',
-            fontWeight: 500,
-            background: '#fff',
-            border: '1px solid var(--border)',
-            borderRadius: 'var(--radius)',
-            cursor: 'pointer',
-          }}
-        >
+        <button type="button" onClick={onNewAnalysis} className="btn-secondary">
           New analysis
         </button>
       </header>
@@ -183,12 +170,13 @@ function Results({ report, onNewAnalysis }) {
             key={id}
             type="button"
             onClick={() => scrollTo(id)}
+            className="nav-link"
             style={{
               background: 'none',
               border: 'none',
               color: 'var(--text-secondary)',
               cursor: 'pointer',
-              padding: 0,
+              padding: '4px 0',
             }}
           >
             {label}
