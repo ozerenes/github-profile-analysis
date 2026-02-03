@@ -67,25 +67,27 @@ function Input({ onBack, onSubmit }) {
     if (fileInputRef.current) fileInputRef.current.value = '';
   };
 
-  const btnStyle = {
+  const inputBaseStyle = {
+    display: 'block',
+    width: '100%',
     minHeight: 'var(--btn-height)',
-    padding: '0 16px',
-    fontSize: '0.875rem',
-    fontWeight: 500,
+    padding: '0 14px',
+    fontSize: '0.9375rem',
+    border: '1px solid var(--border)',
     borderRadius: 'var(--radius)',
-    cursor: 'pointer',
   };
 
   return (
     <section style={{ maxWidth: 560 }}>
       <h2 style={{ fontSize: '1.25rem', fontWeight: 600, marginBottom: 24 }}>Add your materials</h2>
-      <form
+        <form
         onSubmit={handleSubmit}
         style={{
           background: 'var(--bg-surface)',
           border: '1px solid var(--border)',
           borderRadius: 'var(--radius)',
           padding: 'var(--space-24)',
+          boxShadow: 'var(--shadow-sm)',
         }}
       >
         {formError && (
@@ -111,20 +113,22 @@ function Input({ onBack, onSubmit }) {
             CV (PDF) <span style={{ color: 'var(--text-secondary)' }}>Required</span>
           </label>
           <div
+            className="drop-zone"
             onClick={() => fileInputRef.current?.click()}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             style={{
-              minHeight: 80,
-              padding: 16,
-              border: '1px dashed var(--border)',
+              minHeight: 88,
+              padding: 20,
+              border: '2px dashed var(--border)',
               borderRadius: 'var(--radius)',
-              background: 'var(--bg-surface)',
+              background: 'var(--bg-page)',
               cursor: 'pointer',
               display: 'flex',
               flexWrap: 'wrap',
               alignItems: 'center',
               gap: 12,
+              transition: 'border-color var(--transition), background var(--transition)',
             }}
           >
             {file ? (
@@ -139,11 +143,15 @@ function Input({ onBack, onSubmit }) {
                     removeFile();
                   }}
                   style={{
-                    ...btnStyle,
                     marginLeft: 'auto',
+                    minHeight: 'var(--btn-height)',
+                    padding: '0 14px',
+                    fontSize: '0.875rem',
+                    fontWeight: 500,
                     background: 'transparent',
                     border: 'none',
                     color: 'var(--text-secondary)',
+                    cursor: 'pointer',
                   }}
                 >
                   Remove
@@ -182,15 +190,7 @@ function Input({ onBack, onSubmit }) {
             value={githubUrl}
             onChange={(e) => setGithubUrl(e.target.value)}
             placeholder="https://github.com/username"
-            style={{
-              display: 'block',
-              width: '100%',
-              height: 'var(--btn-height)',
-              padding: '0 12px',
-              fontSize: '0.875rem',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)',
-            }}
+            style={inputBaseStyle}
           />
         </div>
         <div style={{ marginBottom: 20 }}>
@@ -204,15 +204,7 @@ function Input({ onBack, onSubmit }) {
             value={linkedinUrl}
             onChange={(e) => setLinkedinUrl(e.target.value)}
             placeholder="https://linkedin.com/in/username"
-            style={{
-              display: 'block',
-              width: '100%',
-              height: 'var(--btn-height)',
-              padding: '0 12px',
-              fontSize: '0.875rem',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)',
-            }}
+            style={inputBaseStyle}
           />
         </div>
         <div style={{ marginBottom: 24 }}>
@@ -226,15 +218,7 @@ function Input({ onBack, onSubmit }) {
             value={portfolioUrl}
             onChange={(e) => setPortfolioUrl(e.target.value)}
             placeholder="https://…"
-            style={{
-              display: 'block',
-              width: '100%',
-              height: 'var(--btn-height)',
-              padding: '0 12px',
-              fontSize: '0.875rem',
-              border: '1px solid var(--border)',
-              borderRadius: 'var(--radius)',
-            }}
+            style={inputBaseStyle}
           />
         </div>
 
@@ -248,26 +232,16 @@ function Input({ onBack, onSubmit }) {
             borderTop: '1px solid var(--border)',
           }}
         >
-          <button
-            type="button"
-            onClick={onBack}
-            style={{
-              ...btnStyle,
-              background: '#fff',
-              border: '1px solid var(--border)',
-              color: 'var(--text-primary)',
-            }}
-          >
+          <button type="button" onClick={onBack} className="btn-secondary">
             Back
           </button>
           <button
             type="submit"
             disabled={!file}
+            className="btn-primary"
             style={{
-              ...btnStyle,
-              color: '#fff',
-              background: file ? '#171717' : '#a3a3a3',
-              border: 'none',
+              background: file ? undefined : 'var(--text-muted)',
+              cursor: file ? 'pointer' : 'not-allowed',
             }}
           >
             Analyze
