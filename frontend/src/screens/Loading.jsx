@@ -13,10 +13,11 @@ function Loading() {
           <span
             key={i}
             style={{
-              width: 6,
-              height: 6,
+              width: 8,
+              height: 8,
               borderRadius: '50%',
-              background: 'var(--border)',
+              background: 'var(--accent)',
+              opacity: 0.4,
               animation: 'loading-dot 1.2s ease-in-out infinite both',
               animationDelay: `${i * 0.2}s`,
             }}
