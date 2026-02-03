@@ -99,7 +99,7 @@ function Input({ onBack, onSubmit }) {
               fontSize: '0.875rem',
               color: '#b91c1c',
               background: '#fef2f2',
-              borderRadius: 4,
+              borderRadius: 'var(--radius-sm)',
             }}
           >
             {formError}

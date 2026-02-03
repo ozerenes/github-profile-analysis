@@ -45,7 +45,7 @@ function App() {
   };
 
   return (
-    <div className="app" style={{ maxWidth: 720, margin: '0 auto' }}>
+    <div className="app" style={{ maxWidth: 720, margin: '0 auto', width: '100%' }}>
       {screen === SCREENS.landing && <Landing onStart={handleStart} />}
       {screen === SCREENS.input && <Input onBack={handleBack} onSubmit={handleSubmit} />}
       {screen === SCREENS.loading && <Loading />}
